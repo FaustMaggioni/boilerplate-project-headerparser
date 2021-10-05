@@ -1,5 +1,3 @@
-const getUserLocale = require('get-user-locale');
-
 require('dotenv').config();
 var express = require('express');
 var app = express();
@@ -21,10 +19,14 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/whoami", function (req,res) {
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const ip = req.ip;
   const language = req.headers['accept-language'];
   const software = req.headers['user-agent'];
-  res.json({ipaddress: ip, language: language, software: software});
+  res.json({
+    ipaddress: ip, 
+    language: language, 
+    software: software
+  });
 })
 
 var listener = app.listen(process.env.PORT, function () {
